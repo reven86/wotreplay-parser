@@ -12,3 +12,10 @@ CMakeCache.txt
 cmake_install.cmake
 build
 test
+ext/boost*
+/_msvc/Release
+/_msvc/Debug
+/_msvc/*.db
+/_msvc/*.user
+/_msvc/*.vs
+/_msvc/*.opendb

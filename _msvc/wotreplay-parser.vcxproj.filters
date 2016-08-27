@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\animation_writer.cpp" />
+    <ClCompile Include="..\src\arena.cpp" />
+    <ClCompile Include="..\src\class_heatmap_writer.cpp" />
+    <ClCompile Include="..\src\game.cpp" />
+    <ClCompile Include="..\src\gui_main.cpp" />
+    <ClCompile Include="..\src\heatmap_writer.cpp" />
+    <ClCompile Include="..\src\image_util.cpp" />
+    <ClCompile Include="..\src\image_writer.cpp" />
+    <ClCompile Include="..\src\imageviewer.cpp" />
+    <ClCompile Include="..\src\json_writer.cpp" />
+    <ClCompile Include="..\src\logger.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\packet.cpp" />
+    <ClCompile Include="..\src\packet_reader_80.cpp" />
+    <ClCompile Include="..\src\parser.cpp" />
+    <ClCompile Include="..\src\rule.cpp" />
+    <ClCompile Include="..\src\tank.cpp" />
+    <ClCompile Include="..\src\mainwindow.cpp" />
+    <ClCompile Include="..\src\jsoncpp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\animation_writer.h" />
+    <ClInclude Include="..\src\arena.h" />
+    <ClInclude Include="..\src\class_heatmap_writer.h" />
+    <ClInclude Include="..\src\game.h" />
+    <ClInclude Include="..\src\heatmap_writer.h" />
+    <ClInclude Include="..\src\image_util.h" />
+    <ClInclude Include="..\src\image_writer.h" />
+    <ClInclude Include="..\src\imageviewer.h" />
+    <ClInclude Include="..\src\json_writer.h" />
+    <ClInclude Include="..\src\logger.h" />
+    <ClInclude Include="..\src\mainwindow.h" />
+    <ClInclude Include="..\src\packet.h" />
+    <ClInclude Include="..\src\packet_reader.h" />
+    <ClInclude Include="..\src\packet_reader_80.h" />
+    <ClInclude Include="..\src\parser.h" />
+    <ClInclude Include="..\src\regex.h" />
+    <ClInclude Include="..\src\rule.h" />
+    <ClInclude Include="..\src\tank.h" />
+    <ClInclude Include="..\src\types.h" />
+    <ClInclude Include="..\src\writer.h" />
+  </ItemGroup>
+</Project>

@@ -92,9 +92,9 @@ add_library(wotreplay STATIC
 			src/animation_writer.cpp)
 
 add_library(jsoncpp STATIC 
-			ext/jsoncpp/src/jsoncpp.cpp
-			ext/jsoncpp/include/json/json.h
-			ext/jsoncpp/include/json/json-forwards.h)
+			src/jsoncpp.cpp
+			src/json/json.h
+			src/json/json-forwards.h)
 
 add_executable(wotreplay-parser src/main.cpp)
 

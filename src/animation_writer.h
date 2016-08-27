@@ -1,4 +1,5 @@
 #pragma once
+#ifdef HAVE_GD
 #ifndef wotreplay_animation_writer_h
 #define wotreplay_animation_writer_h
 
@@ -28,3 +29,4 @@ namespace wotreplay {
 }
 
 #endif
+#endif // HAVE_GD

@@ -1,3 +1,4 @@
+#ifdef HAVE_GD
 #include "animation_writer.h"
 #include "logger.h"
 
@@ -164,3 +165,4 @@ void animation_writer_t::finish() {
 animation_writer_t::~animation_writer_t() {
     ctx->gd_free(ctx);
 }
+#endif  // HAVE_GD
