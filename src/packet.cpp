@@ -225,8 +225,8 @@ std::ostream& wotreplay::operator<<(std::ostream& os, const packet_t &packet) {
 
 std::string wotreplay::to_string(const packet_t &packet) {
     std::stringstream result;
-    for (auto val : packet.get_data()) {
-        result << (boost::format("0x%1$02X ") % (uint32_t) val).str();
+    for (auto val : slice_t(packet.get_data().begin()+12, packet.get_data().end())) {
+        result << (boost::format("%1$02X ") % (uint32_t) val).str();
     }
     return result.str();
 }

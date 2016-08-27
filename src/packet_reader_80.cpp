@@ -27,8 +27,8 @@ packet_t packet_reader_80_t::next() {
 
     packet_t packet( boost::make_iterator_range(packet_begin, packet_end) );
     logger.writef(wotreplay::log_level_t::debug,
-                    "[%2%] type=0x%1$02X size=%3%\n%4%\n",
-                    packet.type(), pos, packet_size, packet);
+                    "[%2$X] type=%1$02X clock=%5% payload_size=%3$X\n%4%\n",
+                    packet.type(), pos, payload_size, packet, packet.clock());
     
     prev = pos;
     pos += packet_size;

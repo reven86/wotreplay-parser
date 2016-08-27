@@ -19,3 +19,4 @@ ext/boost*
 /_msvc/*.user
 /_msvc/*.vs
 /_msvc/*.opendb
+/out
