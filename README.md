@@ -159,7 +159,7 @@ See packet [type 0x03](#type_0x03)
 ### Sub Type 0x05
 
 Vehicle position, orientation and configuration.
-Right after the player's name follows N bytes of Vehicle's compact desriptor (scripts/common/items/vehicles.py).
+Right after the player's name follow N bytes of Vehicle's compact desriptor (scripts/common/items/vehicles.py).
 
 ### Sub Type 0x06
 
@@ -216,7 +216,7 @@ Shot received.
 
 * `player_id`: the player received the shot (victim)
 * `sub_type`: the sub-type of the packet
-* `attacked_id`: the player sent the shot
+* `attacker_id`: the player sent the shot
 * `segments`: encoded points (list). see scripts/client/VehicleEffects.py.
 * `effect_index`: effect's index
 * `damage_factor`: damage factor
