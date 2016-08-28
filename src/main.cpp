@@ -3,6 +3,7 @@
 #include "heatmap_writer.h"
 #include "class_heatmap_writer.h"
 #include "json_writer.h"
+#include "shots_writer.h"
 #include "logger.h"
 #include "parser.h"
 #include "regex.h"
@@ -142,6 +143,9 @@ std::unique_ptr<writer_t> create_writer(const std::string &type, const po::varia
         writer = std::unique_ptr<writer_t>(new json_writer_t());
         apply_settings(dynamic_cast<json_writer_t*>(writer.get()), vm);
     }
+    else if (type == "shots") {
+        writer = std::unique_ptr<writer_t>(new shots_writer_t());
+    }
     else if (type == "heatmap" || type == "team-heatmap" || type == "team-heatmap-soft") {
         writer = std::unique_ptr<writer_t>(new heatmap_writer_t());
         auto &heatmap_writer = dynamic_cast<heatmap_writer_t&>(*writer);
@@ -175,7 +179,7 @@ std::unique_ptr<writer_t> create_writer(const std::string &type, const po::varia
     }
 #endif
     else {
-        logger.writef(log_level_t::error, "Invalid output type (%1%), supported types: png, gif, json, heatmap, team-heatmap, team-heatmap-soft or class-heatmap.\n", type);
+        logger.writef(log_level_t::error, "Invalid output type (%1%), supported types: png, gif, json, shots, heatmap, team-heatmap, team-heatmap-soft or class-heatmap.\n", type);
     }
 
     return writer;
@@ -347,6 +351,7 @@ int process_replay_file(const po::variables_map &vm, const std::string &input, c
     static std::map<std::string, std::string> suffixes = {
         {"png", ".png"},
         {"json", ".json"},
+        {"shots", ".shots"},
         {"heatmap", "_heatmap.png"},
         {"team-heatmap", "_team_heatmap.png"},
         {"team-heatmap-soft", "_team_heatmap_soft.png"},

@@ -279,11 +279,12 @@ void parser_t::read_packets(game_t &game) {
         if (packet.type() == 0x05 && packet.sub_type() == 0x05)
         {
             player_t& player = game.players[packet.player_id()];
-            assert(player.compact_descriptor.empty());
-
-            uint8_t name_len = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 75);
-            uint8_t descr_len = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 75 + 1 + name_len);
-            player.compact_descriptor = slice_t(packet.get_data().begin() + 75 + 1 + name_len + 1, packet.get_data().begin() + 75 + 1 + name_len + 1 + descr_len);
+            if (player.compact_descriptor.empty())
+            {
+                uint8_t name_len = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 75);
+                uint8_t descr_len = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 75 + 1 + name_len);
+                player.compact_descriptor = slice_t(packet.get_data().begin() + 75 + 1 + name_len + 1, packet.get_data().begin() + 75 + 1 + name_len + 1 + descr_len);
+            }
         }
     }
 

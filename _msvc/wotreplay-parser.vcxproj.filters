@@ -20,6 +20,7 @@
     <ClCompile Include="..\src\tank.cpp" />
     <ClCompile Include="..\src\mainwindow.cpp" />
     <ClCompile Include="..\src\jsoncpp.cpp" />
+    <ClCompile Include="..\src\shots_writer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\animation_writer.h" />
@@ -42,5 +43,6 @@
     <ClInclude Include="..\src\tank.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\writer.h" />
+    <ClInclude Include="..\src\shots_writer.h" />
   </ItemGroup>
 </Project>

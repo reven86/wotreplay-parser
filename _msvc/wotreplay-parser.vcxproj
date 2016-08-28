@@ -38,6 +38,7 @@
     <ClCompile Include="..\src\packet_reader_80.cpp" />
     <ClCompile Include="..\src\parser.cpp" />
     <ClCompile Include="..\src\rule.cpp" />
+    <ClCompile Include="..\src\shots_writer.cpp" />
     <ClCompile Include="..\src\tank.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,7 @@
     <ClInclude Include="..\src\parser.h" />
     <ClInclude Include="..\src\regex.h" />
     <ClInclude Include="..\src\rule.h" />
+    <ClInclude Include="..\src\shots_writer.h" />
     <ClInclude Include="..\src\tank.h" />
     <ClInclude Include="..\src\types.h" />
     <ClInclude Include="..\src\writer.h" />
