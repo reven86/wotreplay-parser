@@ -55,9 +55,9 @@ parser_t::parser_t(load_data_mode_t load_data_mode, bool debug)
     : debug(debug), load_data_mode(load_data_mode)
 {
     // empty
-    if (load_data_mode == load_data_mode_t::bulk) {
-        this->load_data();
-    }
+    //if (load_data_mode == load_data_mode_t::bulk) {
+    //    this->load_data();
+    //}
 }
 
 void parser_t::parse(std::istream &is, wotreplay::game_t &game) {
