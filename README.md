@@ -139,6 +139,12 @@ Each packet is evaluated using the defined rules and assigned a class (first mat
 
 # Packet Overview
 
+## Type 0x00
+
+Probably game/arena configuration.
+
+* `arena_id`: id different from any of players
+
 ## Type 0x03
 
 This packet is related to the spotting of tanks, it will occurr together with packet type 0x05 when the tank appears for the user (each time).
@@ -149,6 +155,15 @@ This packet is related to the spotting of tanks, it will occurr together with pa
 ## Type 0x05
 
 See packet [type 0x03](#type_0x03)
+
+### Sub Type 0x05
+
+Vehicle position, orientation and configuration.
+Right after the player's name follows N bytes of Vehicle's compact desriptor (scripts/common/items/vehicles.py).
+
+### Sub Type 0x06
+
+Entity position. Entity can be a vehicle, destructible, etc.
 
 ## Type 0x07
 
@@ -195,6 +210,17 @@ This packet indicates that a player was shot by another player. When this is not
 * `sub_type`: the sub-type of the packet
 * `source`: source of the shell
 
+### Sub Type 0x07
+
+Shot received.
+
+* `player_id`: the player received the shot (victim)
+* `sub_type`: the sub-type of the packet
+* `attacked_id`: the player sent the shot
+* `segments`: encoded points (list). see scripts/client/VehicleEffects.py.
+* `effect_index`: effect's index
+* `damage_factor`: damage factor
+
 ### Sub Type 0x0B
 
 Most likely the indicator of a module being damaged.
@@ -225,6 +251,10 @@ Unclear.
 * `sub_type`: the sub-type of the packet
 * `target`: player receiving the damage
 
+### Sub Type 0x29
+
+Players list is encoded somehow here.
+
 ## Type 0x0A
 
 This is the most frequent type of packet, it tells the player about the positions of any other player.
@@ -232,8 +262,12 @@ This is the most frequent type of packet, it tells the player about the position
 * `type`: the type of the packet
 * `clock`: the timestamp of the packet
 * `player_id`: the subject of the track status
-* `position`: the sub-type of the packet
+* `position`: the position of the player 3 floats
 * `hull_orientation`: the sub-type of the packet
+
+## Type 0x18
+
+Game version string.
 
 ## Type 0x1F
 
@@ -255,6 +289,12 @@ This packet indicates that a player's tank was tracked.
 * `sub_type`: the sub-type of the packet
 * `alt_track_state`: indicates if the tank is tracked using values 0xF0 (not tracked) or 0xF6 (tracked)
 * `destroyed_track_id`: the id of the track that was destroyed destroyed, possible values are 0x1D (left track is destroyed) and 0x1E (right track is destroyed). 
+
+## Type 0x24
+
+This packet usually accompanies Shot packet (Type 0x08 sub-type 0x07). It is send separately for each encoded segment in the list of hit points.
+
+* `player_id`: the player receiving the shot (victim).
 
 # License
 
