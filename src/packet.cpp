@@ -73,6 +73,7 @@ void packet_t::set_data(const slice_t &data) {
         case 0x05:
             properties[static_cast<size_t>(property_t::clock)] = true;
             properties[static_cast<size_t>(property_t::player_id)] = true;
+            properties[static_cast<size_t>(property_t::sub_type)] = true;
             break;
         case 0x0a:
             properties[static_cast<size_t>(property_t::position)] = true;

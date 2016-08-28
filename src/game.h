@@ -47,6 +47,7 @@ namespace wotreplay {
         int team;
         std::string name;
         std::string tank;
+        slice_t compact_descriptor;      ///< filled when packet with compact descriptor is read.
     };
 
     /**
