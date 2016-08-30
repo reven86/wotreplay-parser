@@ -334,6 +334,7 @@ int process_replay_directory(const po::variables_map &vm, const std::string &inp
             (writer->second)->init(game.get_arena(), game.get_game_mode());
         }
 
+        //std::cout << it->path() << std::endl;
         (writer->second)->update(game);
         parsed_count++;
 

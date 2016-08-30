@@ -249,6 +249,11 @@ const player_t &game_t::get_player(int player) const {
     return players.at(player);
 }
 
+const player_t *game_t::get_player_or_null(int player) const {
+    auto it = players.find(player);
+    return it == players.end() ? NULL : &(*it).second;
+}
+
 game_title_t game_t::get_game_title() const {
 	return title;
 }

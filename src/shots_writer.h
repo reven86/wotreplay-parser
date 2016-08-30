@@ -26,9 +26,18 @@ namespace wotreplay {
         bool initialized;
         filter_t filter;
 
-        typedef std::array<uint8_t,8> shot_t;
+        struct shot_t
+        {
+            typedef std::array<uint8_t, 8> point_t;
 
-        std::unordered_map<uint16_t, std::vector<shot_t>> shots_map;
+            uint16_t attacker_descriptor;   // attacker's vehicle id
+            point_t point;
+            uint8_t damage_factor;  // 0 means no damage at all (no pen, ricochet, or damaged external module)
+
+            std::vector<uint8_t> modules;   // damaged or destroyed modules
+        };
+
+        std::unordered_map<uint16_t, std::vector<shot_t> > shots_map;
     };
 }
 

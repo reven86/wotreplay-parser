@@ -7,6 +7,7 @@
 
 #include <set>
 #include <vector>
+#include <unordered_map>
 
 /** @file */
 
@@ -130,7 +131,12 @@ namespace wotreplay {
          * @return Player information
          */
         const player_t &get_player(int player_id) const;
-		game_title_t get_game_title() const;
+        /**
+         * Get player information with the player id or NULL.
+         * @return Player information
+         */
+        const player_t *get_player_or_null(int player_id) const;
+        game_title_t get_game_title() const;
     private:
         std::vector<packet_t> packets;
         std::array<std::set<int>, 2> teams;
@@ -141,7 +147,7 @@ namespace wotreplay {
         buffer_t replay;
         uint32_t recorder_id;
         version_t version;
-        std::map<int, player_t> players;
+        std::unordered_map<int, player_t> players;
 		game_title_t title;
     };
 

@@ -223,14 +223,33 @@ Shot received.
 
 ### Sub Type 0x0B
 
-Most likely the indicator of a module being damaged.
+Just some float number in the payload...
 
-* `type`: the type of the packet
-* `clock`: the timestamp of the packet
-* `player_id`: nonsense?
-* `sub_type`: the sub-type of the packet
-* `source`: player dealing damage to the moduel
-* `target`: player receiving the damage
+### Sub Type 0x0D
+
+Module being damaged or repaired.
+
+* `player_id`: player for which module information is sent
+* `module_status`: status of module:
+    0x0A - crew member is damaged
+    0x04 - module is damaged
+    0x05 - module is destroyed
+    0x08 - fire ???
+    0x0b - ammorack ???
+    0x12 - module is auto-repaired
+    0x1a - death ???
+* `module_type`:
+    0x3c - drive
+    0x3d - ammo rack
+    0x3e - fueltank
+    0x3f - radio
+    0x40 - left track
+    0x41 - right track
+    0x42 - gun
+    0x43 - turret rotator ???
+    0x44 - surveying device
+    0x45 - commander
+* `attacker_id`: player who damaged the module
 
 ### Sub Type 0x11
 

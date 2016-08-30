@@ -13,6 +13,7 @@ cmake_install.cmake
 build
 test
 ext/boost*
+ext/tbb*
 /_msvc/Release
 /_msvc/Debug
 /_msvc/*.db
