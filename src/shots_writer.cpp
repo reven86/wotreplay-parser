@@ -1,4 +1,5 @@
 #include "shots_writer.h"
+#include <iostream>
 
 using namespace wotreplay;
 
@@ -38,6 +39,11 @@ void shots_writer_t::update(const game_t &game) {
     std::unordered_map<uint32_t, std::vector<uint8_t> > last_frame_modules;
     float last_modules_time = 0.0f;
 
+    uint32_t status_player_id;
+    uint8_t status;
+    uint8_t death_reason;
+    float last_player_status_time = 0.0f;
+
     for (const auto &packet : game.get_packets()) {
         // skip empty packet
         if (!filter(packet)) continue;
@@ -46,6 +52,23 @@ void shots_writer_t::update(const game_t &game) {
         {
             switch(packet.sub_type())
             {
+            case 0x25:
+                {
+                    uint8_t data_count = get_field<uint32_t>(packet.get_data().begin(), packet.get_data().end(), 24);
+                    assert(data_count == 1);
+                    uint32_t player_id = get_field<uint32_t>(packet.get_data().begin(), packet.get_data().end(), 25);
+                    uint8_t player_status = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 29);
+                    uint8_t player_death_reason = get_field<uint8_t>(packet.get_data().begin(), packet.get_data().end(), 30);
+
+                    if ((player_status == 0x11 && (player_death_reason & 0x05) != 0) || player_status == 0x14)
+                    {
+                        last_player_status_time = packet.clock();
+                        status_player_id = player_id;
+                        status = player_status;
+                        death_reason = player_death_reason;
+                    }
+                }
+                break;
             case 0x0D:
                 {
                     // modules information usually comes before shot packets
@@ -81,6 +104,17 @@ void shots_writer_t::update(const game_t &game) {
                     const uint8_t * point = reinterpret_cast<const uint8_t *>(&(*packet.get_data().begin())) + 29;
                     uint8_t damage_factor = *(packet.get_data().begin() + 29 + num_points * 8 + 1);
                     auto& modules = packet.clock() == last_modules_time ? last_frame_modules.find(packet.player_id()) : last_frame_modules.end();
+
+                    if (last_player_status_time == packet.clock() && ((status == 0x11 && (death_reason & 0x05) != 0) || status == 0x14) && packet.player_id() == status_player_id)
+                    {
+                        if (modules == last_frame_modules.end())
+                        {
+                            last_frame_modules[packet.player_id()].clear();
+                            modules = last_frame_modules.find(packet.player_id());
+                        }
+                        (*modules).second.push_back(status == 0x11 ? 0x3d : 0x3e);
+                    }
+
                     while (num_points-- > 0)
                     {
                         shots.emplace_back(shot_t{ !attacker || attacker->compact_descriptor.empty() ? (uint16_t)0 : get_field<uint16_t>(attacker->compact_descriptor.begin(), attacker->compact_descriptor.end(), 0),

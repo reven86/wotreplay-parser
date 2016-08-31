@@ -167,9 +167,9 @@ Entity position. Entity can be a vehicle, destructible, etc.
 
 ## Type 0x07
 
-### Sub Type 0x03
+### Sub Type 0x03/0x04 (self/enemy)
 
-This packet seems to be a health update which is sent relatively frequently, it only contains the following properties.
+This packet seems to be a health update which is sent relatively frequently, it only contains the following properties. Negative health means tank was ammoracked (probably).
 
 * `type`: the type of the packet
 * `clock`: the timestamp of the packet
@@ -186,6 +186,10 @@ This packet seems to be sent when a player's tracks are repaired, it also indica
 * `player_id`: the subject of the track status
 * `sub_type`: the sub-type of the packet
 * `destroyed_track_id`: the id of the track that is still destroyed, possible values here are 0x00 (tank is not tracked), 0x1D (left track) and 0x1E (right track)
+
+### Sub Type 0x08
+
+Player stops fire.
 
 ## Type 0x08
 
@@ -251,6 +255,10 @@ Module being damaged or repaired.
     0x45 - commander
 * `attacker_id`: player who damaged the module
 
+### Sub Type 0x0A
+
+Ammo count.
+
 ### Sub Type 0x11
 
 Indicator that a shot was fired by a player.
@@ -269,6 +277,16 @@ Unclear.
 * `player_id`: the subject of the track status
 * `sub_type`: the sub-type of the packet
 * `target`: player receiving the damage
+
+### Sub Type 0x25
+
+Player flags (??)
+
+* `player_id`: the player id, seems to be a list but I never saw more than one item here
+* `flags`: state and death reason ???
+    0x10 .... - nothing interesting.. dunno
+    0x11 0x05(0x0d) - player is ammoracked
+    0x14 0x05 - player is on fire
 
 ### Sub Type 0x29
 
@@ -312,6 +330,7 @@ This packet indicates that a player's tank was tracked.
 ## Type 0x24
 
 This packet usually accompanies Shot packet (Type 0x08 sub-type 0x07). It is send separately for each encoded segment in the list of hit points.
+It contains some bitmask so it may be related to behicle/shot flags (??)
 
 * `player_id`: the player receiving the shot (victim).
 
