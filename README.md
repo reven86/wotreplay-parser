@@ -139,13 +139,15 @@ Each packet is evaluated using the defined rules and assigned a class (first mat
 
 # Packet Overview
 
-## Type 0x00
+Note: Packets are named according to clues found in wot blitz replays.
+
+## Type 0x00 (MSG_ON_BASE_PLAYER_CREATE)
 
 Probably game/arena configuration.
 
 * `arena_id`: id different from any of players
 
-## Type 0x03
+## Type 0x03 
 
 This packet is related to the spotting of tanks, it will occurr together with packet type 0x05 when the tank appears for the user (each time).
 
@@ -191,7 +193,9 @@ This packet seems to be sent when a player's tracks are repaired, it also indica
 
 Player stops fire.
 
-## Type 0x08
+## Type 0x08 (MSG_ON_ENTITY_METHOD)
+
+This packet invokes methods on entities, according to their definition files (.def)
 
 ### Sub Type 0x01
 
