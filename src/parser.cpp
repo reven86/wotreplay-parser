@@ -70,25 +70,28 @@ void parser_t::parse(buffer_t &buffer, wotreplay::game_t &game) {
     std::vector<slice_t> data_blocks;
     buffer_t raw_replay;
     
-    get_data_blocks(buffer, data_blocks);
+    // check whether replay is compressed by verifying it's magic
+    if (get_field<uint32_t>(buffer.begin(), buffer.end(), 0) == 0x11343212)
+    {
+        get_data_blocks(buffer, data_blocks);
 
-    if (debug) {
-        for (int i = 0; i < data_blocks.size(); ++i) {
-            debug_stream_content((boost::format("out/data-block-%1%.dat") % i).str(),
-                                data_blocks[i].begin(), data_blocks[i].end());
+        if (debug) {
+            for (int i = 0; i < data_blocks.size(); ++i) {
+                debug_stream_content((boost::format("out/data-block-%1%.dat") % i).str(),
+                    data_blocks[i].begin(), data_blocks[i].end());
+            }
         }
-    }
-        
-    if (data_blocks.size() < 2) {
-        std::string message((boost::format("Unexpected number of data blocks (%1%).") % data_blocks.size()).str());
-        throw std::runtime_error(message);
-    }
 
-    buffer_t &game_begin = game.game_begin;
-    game_begin.resize(data_blocks[0].size());
-    std::copy(data_blocks[0].begin(), data_blocks[0].end(), game_begin.begin());
+        if (data_blocks.size() < 2) {
+            std::string message((boost::format("Unexpected number of data blocks (%1%).") % data_blocks.size()).str());
+            throw std::runtime_error(message);
+        }
 
-    switch(data_blocks.size()) {
+        buffer_t &game_begin = game.game_begin;
+        game_begin.resize(data_blocks[0].size());
+        std::copy(data_blocks[0].begin(), data_blocks[0].end(), game_begin.begin());
+
+        switch (data_blocks.size()) {
         case 4: {
             buffer_t &game_end = game.game_end;
             game_end.resize(data_blocks[1].size());
@@ -97,17 +100,22 @@ void parser_t::parse(buffer_t &buffer, wotreplay::game_t &game) {
         case 3: {
             // third block contains game summary
         }
+        }
+
+        raw_replay.resize(data_blocks.back().size());
+        std::copy(data_blocks.back().begin(), data_blocks.back().end(), raw_replay.begin());
+
+        read_game_info(game);
+
+        auto key = encryption_keys[game.get_game_title()].data();
+        decrypt_replay(raw_replay, key);
+
+        extract_replay(raw_replay, game.replay);
     }
-
-    raw_replay.resize(data_blocks.back().size());
-    std::copy(data_blocks.back().begin(), data_blocks.back().end(), raw_replay.begin());
-        
-	read_game_info(game);
-
-	auto key = encryption_keys[game.get_game_title()].data();
-    decrypt_replay(raw_replay, key);
-
-    extract_replay(raw_replay, game.replay);
+    else
+    {
+        game.replay = buffer;
+    }
 
 	debug_stream_content("out/replay.dat", game.replay.begin(), game.replay.end());
     
